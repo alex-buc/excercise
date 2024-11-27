@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -14,8 +13,6 @@ public class OwnPositionMarker: IMarker
     private string _markerId;
     private string _initials;
     private Color _userPreferedColor;
-    private string? initials;
-    private Color userPreferedColor;
 
     public OwnPositionMarker(string initials, Color userPreferedColor)
     {

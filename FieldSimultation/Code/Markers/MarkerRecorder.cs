@@ -23,6 +23,7 @@ public class MarkerRecorder
                 break;
             }
             case MarkerType.ROUTE: {
+                _grupMarker = new RouteMarker(userPreferedColor);
                 break;
             }
             default: {

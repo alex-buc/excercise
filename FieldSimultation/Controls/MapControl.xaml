@@ -12,9 +12,9 @@
         <StackPanel x:Name="DrowOperations" Grid.Row="0" Background="LightGray" Orientation="Horizontal" VerticalAlignment="Center" Visibility="Visible">
             <Button Content="Drow on map" Width="150" Margin="0,20,20,0" Click="Drow_Click"/>
             <RadioButton Content="Own Position" Margin="0,20,20,0" GroupName="DrowOperations" IsChecked="True" VerticalAlignment="Center" Tag="OWN_LOCATION"/>
-            <RadioButton Content="Symbol" Margin="0,22,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="SYMBOL"/>
+            <!-- <RadioButton Content="Symbol" Margin="0,22,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="SYMBOL"/> -->
             <RadioButton Content="Poligon" Margin="0,20,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="POLIGON"/>
-            <RadioButton Content="Rute" Margin="0,20,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="Route"/>
+            <RadioButton Content="Rute" Margin="0,20,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="ROUTE"/>
         </StackPanel>
         <StackPanel x:Name="SaveOperation" Grid.Row="0" Background="LightGray" Orientation="Horizontal" VerticalAlignment="Center" Visibility="Collapsed">
             <Button Content="Save markers" Width="150" Margin="0,20,20,0" Click="Save_Click"/>
