@@ -1,12 +1,10 @@
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Code.Models;
-using System.Windows;
+using FieldSimultation.Code.Models;
 
-namespace Code.Services;
+namespace FieldSimultation.Code.Services;
 
 public class UserService
 {

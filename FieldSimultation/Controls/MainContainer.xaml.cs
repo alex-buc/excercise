@@ -1,9 +1,9 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using Code.Services;
-using Code.Models;
+using FieldSimultation.Code.Services;
+using FieldSimultation.Code.Models;
 using System.Collections.Generic;
-using System;
 
 namespace FieldSimultation.Controls;
 
@@ -21,7 +21,9 @@ public partial class MainContainer: UserControl
     }
 
     private void SetStaffInfo(StaffDto staff) {
-        FullName.Content = $"Welcome: {staff.FullName}";
+        FullName.Content = staff.FullName;
+        //Rank
+
     }
 
     private async void SetMissionGrid(StaffDto staff) {

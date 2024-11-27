@@ -1,4 +1,4 @@
-namespace Code.Models;
+namespace FieldSimultation.Code.Models;
 
 public class MissionDto {
     public int Id { get; set; }

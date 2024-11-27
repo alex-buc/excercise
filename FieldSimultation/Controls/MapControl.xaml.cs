@@ -4,8 +4,8 @@ using System.Windows.Input;
 
 using GMap.NET;
 using GMap.NET.MapProviders;
-using Code.OwnPosition;
-using Code.Models;
+using FieldSimultation.Code.OwnPosition;
+using FieldSimultation.Code.Models;
 using System;
 using System.Windows.Media;
 
@@ -23,9 +23,8 @@ namespace FieldSimultation.Controls;
 
     public void InitializeMap(MissionDto mission)
     {
-        // initMap
-        map.MapProvider = GMapProviders.OpenStreetMap; // Use OpenStreetMap
-        map.Position = new PointLatLng(mission.StartPositionLat, mission.StartPositionLng); // New York City
+        map.MapProvider = GMapProviders.OpenStreetMap;
+        map.Position = new PointLatLng(mission.StartPositionLat, mission.StartPositionLng);
         map.MinZoom = 1;
         map.MaxZoom = 18;
         map.Zoom = 10;

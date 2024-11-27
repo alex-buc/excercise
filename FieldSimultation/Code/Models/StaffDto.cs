@@ -1,4 +1,4 @@
-namespace Code.Models;
+namespace FieldSimultation.Code.Models;
 public class StaffDto
 {
     public int Id { get; set; }
