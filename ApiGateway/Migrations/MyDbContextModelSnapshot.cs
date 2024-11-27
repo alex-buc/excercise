@@ -34,7 +34,7 @@ namespace GatawayApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StaffId")
+                    b.Property<int>("MissionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -43,7 +43,7 @@ namespace GatawayApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StaffId");
+                    b.HasIndex("MissionId");
 
                     b.ToTable("MapShapes");
                 });
@@ -137,7 +137,7 @@ namespace GatawayApplication.Migrations
                     b.Property<int?>("SuperiorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -146,7 +146,7 @@ namespace GatawayApplication.Migrations
 
                     b.HasIndex("SuperiorId");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Staffs");
                 });
@@ -174,13 +174,13 @@ namespace GatawayApplication.Migrations
 
             modelBuilder.Entity("ApiGateway.Models.MapShapeViewModel", b =>
                 {
-                    b.HasOne("ApiGateway.Models.StaffViewModel", "Staff")
+                    b.HasOne("ApiGateway.Models.MissionViewModel", "Mission")
                         .WithMany()
-                        .HasForeignKey("StaffId")
+                        .HasForeignKey("MissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Staff");
+                    b.Navigation("Mission");
                 });
 
             modelBuilder.Entity("ApiGateway.Models.MissionAllocationViewModel", b =>
@@ -214,9 +214,9 @@ namespace GatawayApplication.Migrations
                         .WithMany()
                         .HasForeignKey("SuperiorId");
 
-                    b.HasOne("ApiGateway.Models.UserViewModel", "user")
+                    b.HasOne("ApiGateway.Models.UserViewModel", "User")
                         .WithMany()
-                        .HasForeignKey("userId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -224,7 +224,7 @@ namespace GatawayApplication.Migrations
 
                     b.Navigation("Superior");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

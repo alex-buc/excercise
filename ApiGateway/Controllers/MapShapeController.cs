@@ -26,19 +26,19 @@ public class MapShapesController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> addMapShape(
         [FromQueryAttribute] string type, 
-        [FromQueryAttribute] string data, 
-        [FromQueryAttribute] int staffId
+        [FromQueryAttribute] string data,
+        [FromQueryAttribute] int missionId
     )
     {
-        StaffViewModel staffModel = _myDdContext.Staffs.Find(staffId);
-        if(staffModel == null) {
-            return BadRequest("Invalid staff id.");
+        MissionViewModel missionModel = _myDdContext.Missions.Find(missionId);
+        if(missionModel == null) {
+            return BadRequest("Invalid mission id.");
         }
 
         MapShapeViewModel model = new MapShapeViewModel {
             Type = type,
             Data = data,
-            Staff = staffModel
+            Mission = missionModel
         };
 
         _myDdContext.MapShapes.Add(model);

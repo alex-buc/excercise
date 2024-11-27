@@ -9,7 +9,7 @@ public class MapShapeViewModel
     public string Type { get; set; }
 
     public string Data { get; set; }
-
-    public StaffViewModel Staff { get; set; }
+    
+    public MissionViewModel Mission { get; set; }
 }
 

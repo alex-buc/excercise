@@ -53,6 +53,27 @@ namespace GatawayApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MapShapes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MissionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MapShapes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MapShapes_Missions_MissionId",
+                        column: x => x.MissionId,
+                        principalTable: "Missions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Staffs",
                 columns: table => new
                 {
@@ -61,7 +82,7 @@ namespace GatawayApplication.Migrations
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentificationColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Initials = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     SuperiorId = table.Column<int>(type: "int", nullable: true),
                     RankId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -80,30 +101,9 @@ namespace GatawayApplication.Migrations
                         principalTable: "Staffs",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Staffs_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_Staffs_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MapShapes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StaffId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MapShapes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MapShapes_Staffs_StaffId",
-                        column: x => x.StaffId,
-                        principalTable: "Staffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -135,9 +135,9 @@ namespace GatawayApplication.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MapShapes_StaffId",
+                name: "IX_MapShapes_MissionId",
                 table: "MapShapes",
-                column: "StaffId");
+                column: "MissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MissionAllocations_MissionId",
@@ -160,9 +160,9 @@ namespace GatawayApplication.Migrations
                 column: "SuperiorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Staffs_userId",
+                name: "IX_Staffs_UserId",
                 table: "Staffs",
-                column: "userId");
+                column: "UserId");
         }
 
         /// <inheritdoc />

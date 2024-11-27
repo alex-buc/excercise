@@ -6,14 +6,23 @@
              xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation">
    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Background="LightGray">
-
+        <StackPanel x:Name="DrowOperations" Grid.Row="0" Background="LightGray" Orientation="Horizontal" VerticalAlignment="Center" Visibility="Visible">
+            <Button Content="Drow on map" Width="150" Margin="0,20,20,0" Click="Drow_Click"/>
+            <RadioButton Content="Own Position" Margin="0,20,20,0" GroupName="DrowOperations" IsChecked="True" VerticalAlignment="Center" Tag="OWN_LOCATION"/>
+            <RadioButton Content="Symbol" Margin="0,22,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="SYMBOL"/>
+            <RadioButton Content="Poligon" Margin="0,20,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="POLIGON"/>
+            <RadioButton Content="Rute" Margin="0,20,20,0" GroupName="DrowOperations" VerticalAlignment="Center" Tag="Route"/>
         </StackPanel>
-        <gmap:GMapControl Grid.Row="1" x:Name="map" MouseRightButtonDown ="MapControl_RightButtonDown" />
-        <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="50" Margin="0, 120, 20, 0"
+        <StackPanel x:Name="SaveOperation" Grid.Row="0" Background="LightGray" Orientation="Horizontal" VerticalAlignment="Center" Visibility="Collapsed">
+            <Button Content="Save markers" Width="150" Margin="0,20,20,0" Click="Save_Click"/>
+            <RadioButton Content="Yes" Margin="0,22,20,0" GroupName="Options" IsChecked="True" VerticalAlignment="Center" />
+            <RadioButton Content="No" Margin="0,20,20,0" GroupName="Options" VerticalAlignment="Center" />
+        </StackPanel>
+        <gmap:GMapControl Grid.Row="1" x:Name="map" MouseLeftButtonDown ="MapControl_LeftButtonDown"/>
+        <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="50" Margin="0, 70, 20, 0"
                 MouseLeftButtonDown="OnMapClosed">
             <Ellipse Width="50" Height="50" Fill="white" Stroke="LightGray" StrokeThickness="3" />
             <Line X1="15" Y1="15" X2="35" Y2="35" Stroke="Gray" StrokeThickness="2" />
