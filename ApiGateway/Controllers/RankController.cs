@@ -7,23 +7,23 @@ namespace ApiGateway.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RankController : ControllerBase 
+public class RanksController : ControllerBase 
 {
     private readonly MyDbContext _myDdContext;
 
-    public RankController(MyDbContext myDdContext)
+    public RanksController(MyDbContext myDdContext)
     {
         _myDdContext = myDdContext;
     }
 
-    [HttpGet("ranks")]
+    [HttpGet("")]
     public async Task<IActionResult> getAllRanks()
     {
         var allRanks = await _myDdContext.Ranks.ToListAsync();
         return Ok(allRanks);
     }
 
-    [HttpPost("add")]
+    [HttpPost("")]
     public async Task<IActionResult> addRank([FromQueryAttribute] string rankName )
     {
         if (string.IsNullOrEmpty(rankName))

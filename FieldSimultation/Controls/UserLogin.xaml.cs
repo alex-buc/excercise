@@ -1,6 +1,8 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Code.Services;
+using Code.Models;
 
 namespace FieldSimultation.Controls;
 
@@ -12,19 +14,15 @@ namespace FieldSimultation.Controls;
         InitializeComponent();
     }
 
-    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
+    private async void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
-        string username = UsernameTextBox.Text;
-        string password = PasswordBox.Password;
-
-        // Simple check for username and password
-        if (username == "user" && password == "password")
+        try
         {
-            // Trigger the login success event
+            UserService userService = new UserService();
+            UserDto user = await userService.GetUserAsync(UsernameTextBox.Text, PasswordBox.Password);
             LoginSuccess?.Invoke(this, EventArgs.Empty);
         }
-        else
-        {
+        catch {
             MessageBox.Show("Invalid credentials!");
         }
     }

@@ -8,22 +8,23 @@ namespace ApiGateway.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController : ControllerBase 
+public class UsersController : ControllerBase 
 {
     private readonly MyDbContext _myDdContext;
 
-    public UserController(MyDbContext myDdContext)
+    public UsersController(MyDbContext myDdContext)
     {
         _myDdContext = myDdContext;
     }
 
-    [HttpGet("users")]
+    [HttpGet("")]
     public async Task<IActionResult> getAllUsers()
     {
         var allUsers = await _myDdContext.Users.ToListAsync();
         return Ok(allUsers);
     }
-    [HttpGet("user")]
+
+    [HttpGet("authentificate")]
     public async Task<IActionResult> getUser([FromQueryAttribute] string user, [FromQueryAttribute] string password)
     {
         var foundUser = await _myDdContext.Users.FirstOrDefaultAsync(u => u.UserName == user && u.Password == PasswordHelper.GeneratePasswordWithStaticSalt(password));
@@ -37,7 +38,7 @@ public class UserController : ControllerBase
         return Ok(foundUser);
     }
 
-    [HttpPost("add")]
+    [HttpPost("")]
     public async Task<IActionResult> addUser(
         [FromQueryAttribute] string userName, 
         [FromQueryAttribute] string password
@@ -67,5 +68,22 @@ public class UserController : ControllerBase
 
         return CreatedAtAction(nameof(getAllUsers), new { id = model.Id }, model);
     }
-   
+    
+    [HttpGet("{userId}/staff")]
+    public async Task<IActionResult> getStaffByUserId(int userId) {
+        UserViewModel user = _myDdContext.Users.Find(userId);
+        if (user == null) {
+            return BadRequest("Invalid user id.");
+        }
+
+        StaffViewModel staff = await _myDdContext.Staffs.FirstOrDefaultAsync(s => s.User.Id == userId);
+        if(staff == null) 
+        {
+            return NotFound("No staff found for user id.");
+        }
+        else 
+        {
+            return Ok(staff);
+        }
+    }
 }

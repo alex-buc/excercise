@@ -7,23 +7,23 @@ namespace ApiGateway.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MapShapeController : ControllerBase 
+public class MapShapesController : ControllerBase 
 {
     private readonly MyDbContext _myDdContext;
 
-    public MapShapeController(MyDbContext myDdContext)
+    public MapShapesController(MyDbContext myDdContext)
     {
         _myDdContext = myDdContext;
     }
 
-    [HttpGet("mapShapes")]
+    [HttpGet("")]
     public async Task<IActionResult> allMapShapes()
     {
         var allMapShapes = await _myDdContext.MapShapes.ToListAsync();
         return Ok(allMapShapes);
     }
 
-    [HttpPost("add")]
+    [HttpPost("")]
     public async Task<IActionResult> addMapShape(
         [FromQueryAttribute] string type, 
         [FromQueryAttribute] string data, 

@@ -12,7 +12,7 @@ public class StaffViewModel
 
     public string Initials { get; set; }
 
-    public UserViewModel user { get; set; }
+    public UserViewModel User { get; set; }
 
     public StaffViewModel? Superior { get; set; }
     

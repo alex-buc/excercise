@@ -1,35 +1,32 @@
+using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Code.Models;
 
 namespace Code.Services;
 
 public class UserService
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = new HttpClient();
 
-    // Constructor with dependency injection for HttpClient
-    public UserService(HttpClient httpClient)
+    public UserService()
     {
-        _httpClient = httpClient;
+        _httpClient.BaseAddress = new Uri($"{HttpClientConst.ApiGatewayUrl}/Users/");
     }
 
-    // public async Task<User> GetUserAsync(string username, string password)
-    // {
-    //     var url = $"http://localhost:5171/api/user?user={username}&password={password}";
-
-    //     // Send GET request to the API endpoint
-    //     var response = await _httpClient.GetAsync(url);
-
-    //     // Ensure the response is successful
-    //     response.EnsureSuccessStatusCode();
-
-    //     // Read the response content as a string
-    //     var jsonResponse = await response.Content.ReadAsStringAsync();
-
-    //     // Deserialize the JSON response into a User object
-    //     var user = JsonSerializer.Deserialize<User>(jsonResponse);
-
-    //     return user;
-    // }
+    public async Task<UserDto> GetUserAsync(string username, string password)
+    {
+        var response = await _httpClient.GetAsync($"authentificate?user={username}&password={password}");
+        if (response.IsSuccessStatusCode)
+        {
+            var user = await response.Content.ReadFromJsonAsync<UserDto>();
+            return user;
+        }
+        else
+        {
+            throw new Exception("Unable to retrieve user data.");
+        }
+    }
 }

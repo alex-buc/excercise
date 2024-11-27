@@ -7,23 +7,23 @@ namespace ApiGateway.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class StaffController : ControllerBase 
+public class StaffsController : ControllerBase 
 {
     private readonly MyDbContext _myDdContext;
 
-    public StaffController(MyDbContext myDdContext)
+    public StaffsController(MyDbContext myDdContext)
     {
         _myDdContext = myDdContext;
     }
 
-    [HttpGet("staffs")]
+    [HttpGet("")]
     public async Task<IActionResult> getAllStaffs()
     {
         var allStaffs = await _myDdContext.Staffs.ToListAsync();
         return Ok(allStaffs);
     }
 
-    [HttpPost("add")]
+    [HttpPost("")]
     public async Task<IActionResult> addStaff(
         [FromQueryAttribute] string fullName, 
         [FromQueryAttribute] string identificationColor, 
@@ -55,7 +55,7 @@ public class StaffController : ControllerBase
             FullName = fullName,
             IdentificationColor = identificationColor,
             Initials = initials,
-            user = userModel,
+            User = userModel,
             Rank = rankModel,
             Superior = superiorModel
         };

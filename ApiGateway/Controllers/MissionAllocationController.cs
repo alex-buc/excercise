@@ -7,23 +7,23 @@ namespace ApiGateway.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MissionAllocationController : ControllerBase 
+public class MissionsAllocationController : ControllerBase 
 {
     private readonly MyDbContext _myDdContext;
 
-    public MissionAllocationController(MyDbContext myDdContext)
+    public MissionsAllocationController(MyDbContext myDdContext)
     {
         _myDdContext = myDdContext;
     }
 
-    [HttpGet("missionAllocations")]
+    [HttpGet("")]
     public async Task<IActionResult> getMissionAllocations()
     {
         var allMissionAllocations = await _myDdContext.MissionAllocations.ToListAsync();
         return Ok(allMissionAllocations);
     }
 
-    [HttpPost("add")]
+    [HttpPost("")]
     public async Task<IActionResult> addMissionAllocations(
         [FromQueryAttribute] int staffId, 
         [FromQueryAttribute] int missionId
