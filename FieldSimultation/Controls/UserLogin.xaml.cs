@@ -8,7 +8,7 @@ namespace FieldSimultation.Controls;
 
  public partial class UserLogin: UserControl 
  {
-    public event EventHandler LoginSuccess;
+    public event EventHandler<int> LoginSuccess;
     public UserLogin()
     {
         InitializeComponent();
@@ -20,7 +20,7 @@ namespace FieldSimultation.Controls;
         {
             UserService userService = new UserService();
             UserDto user = await userService.GetUserAsync(UsernameTextBox.Text, PasswordBox.Password);
-            LoginSuccess?.Invoke(this, EventArgs.Empty);
+            LoginSuccess?.Invoke(this, user.Id.Value);
         }
         catch {
             MessageBox.Show("Invalid credentials!");

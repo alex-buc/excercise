@@ -23,6 +23,22 @@ public class StaffsController : ControllerBase
         return Ok(allStaffs);
     }
 
+    [HttpGet("{staffId}/missions")]
+    public async Task<IActionResult> getAllMissionsByStuffId(int staffId) {
+        StaffViewModel userModel = _myDdContext.Staffs.Find(staffId);
+        if(userModel == null) {
+            return BadRequest("Invalid staff id.");
+        }
+
+        List<MissionViewModel> missions = await _myDdContext.MissionAllocations
+            .Where(ma => ma.Staff.Id == staffId)
+            .Include(ma => ma.Mission)
+            .Select(ma => ma.Mission)
+            .ToListAsync();
+            
+        return Ok(missions);
+    }
+
     [HttpPost("")]
     public async Task<IActionResult> addStaff(
         [FromQueryAttribute] string fullName, 

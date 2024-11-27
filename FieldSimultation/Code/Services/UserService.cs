@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Code.Models;
+using System.Windows;
 
 namespace Code.Services;
 
@@ -27,6 +28,20 @@ public class UserService
         else
         {
             throw new Exception("Unable to retrieve user data.");
+        }
+    }
+
+    public async Task<StaffDto> GetStaffInfoAsync(int userId)
+    {
+        var response = await _httpClient.GetAsync($"{userId}/staff");
+        if (response.IsSuccessStatusCode)
+        {
+            var staff = await response.Content.ReadFromJsonAsync<StaffDto>();
+            return staff;
+        }
+        else
+        {
+            throw new Exception("Unable to retrieve staff data.");
         }
     }
 }

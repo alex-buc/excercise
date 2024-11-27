@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FieldSimultation"
         xmlns:userControl="clr-namespace:FieldSimultation.Controls"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Field Simulator" WindowState="Maximized">
     <Grid>
         <Grid.Background>
             <RadialGradientBrush Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
@@ -13,7 +13,6 @@
                 <GradientStop Color="Gray" Offset="1.0"/>
             </RadialGradientBrush>
         </Grid.Background>
-        <!-- <gmap:GMapControl x:Name="MapControl" MouseRightButtonDown ="MapControl_RightButtonDown" /> -->
         <ContentControl Name="MainContentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

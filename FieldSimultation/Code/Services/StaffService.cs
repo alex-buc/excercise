@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Code.Models;
+using System.Collections.Generic;
 
 namespace Code.Services;
 
@@ -13,22 +14,20 @@ public class StaffService
 
     public StaffService()
     {
-        _httpClient.BaseAddress = new Uri($"{HttpClientConst.ApiGatewayUrl}/Staff/");
+        _httpClient.BaseAddress = new Uri($"{HttpClientConst.ApiGatewayUrl}/Staffs/");
     }
 
-    // public async Task<StaffDto> GetUserAsync(string username, string password)
-    // {
-    //     using (var response = await _httpClient.GetAsync($"user?user={username}&password={password}")) 
-    //     {
-    //         if (response.IsSuccessStatusCode)
-    //         {
-    //             var user = await response.Content.ReadFromJsonAsync<UserDto>();
-    //             return user;
-    //         }
-    //         else
-    //         {
-    //             throw new Exception("Unable to retrieve user data.");
-    //         }
-    //     }
-    // }
+     public async Task<List<MissionDto>> getAllMissionsByStuffId(int userId)
+    {
+        var response = await _httpClient.GetAsync($"{userId}/missions");
+        if (response.IsSuccessStatusCode)
+        {
+            var missions = await response.Content.ReadFromJsonAsync<List<MissionDto>>();
+            return missions;
+        }
+        else
+        {
+            throw new Exception("Unable to retrieve missions data.");
+        }
+    }
 }

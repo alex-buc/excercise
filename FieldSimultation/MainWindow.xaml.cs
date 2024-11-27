@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using FieldSimultation.Controls;
+using Code.Services;
+using Code.Models;
 
 namespace FieldSimultation;
 
@@ -13,14 +15,20 @@ public partial class MainWindow : Window
 
         
         var loginControl = new UserLogin();
-        loginControl.LoginSuccess += OnLoginSuccess; // Subscribe to the login success event
-        MainContentControl.Content = loginControl;  // Set the login control as the current content
+        loginControl.LoginSuccess += OnLoginSuccess; 
+        MainContentControl.Content = loginControl; 
     }
 
-    private void OnLoginSuccess(object sender, EventArgs e)
+    private async void OnLoginSuccess(object sender, int userId)
     {
-        // Switch to the main user control upon successful login
-        var mainContent = new MapControl();
-        MainContentControl.Content = mainContent;
+        try {
+            UserService userService = new UserService();
+            StaffDto staff = await userService.GetStaffInfoAsync(userId);
+            var mainContent = new MainContainer(staff);
+            MainContentControl.Content = mainContent;
+        }
+        catch(Exception e) {
+             MessageBox.Show("Could not retrive staff info!");
+        }
     }
 }
