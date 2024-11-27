@@ -15,6 +15,7 @@ public partial class MainContainer: UserControl
         
         SetStaffInfo(staff);
         SetMissionGrid(staff);
+        SetMapInfo(staff);
 
         Map.MapClosed += Map_Closed;
     }
@@ -27,6 +28,10 @@ public partial class MainContainer: UserControl
         StaffService staffService = new StaffService();
         List<MissionDto> missions = await staffService.getAllMissionsByStuffId(staff.Id);
         MissionGrid.setDataSource(missions);
+    }
+
+    private void SetMapInfo(StaffDto staff) {
+        Map.InitializeMarker(staff.Initials, staff.IdentificationColor);
     }
 
     private void MissionGrid_ClickOpenMission(object sender, MissionDto mission) {

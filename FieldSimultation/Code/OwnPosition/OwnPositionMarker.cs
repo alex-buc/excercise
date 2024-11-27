@@ -10,7 +10,7 @@ namespace Code.OwnPosition;
 
 public static class OwnPositionHelper
 {
-    public static GMapMarker AddMarker(PointLatLng position)
+    public static GMapMarker AddMarker(PointLatLng position, string initials, Color userPreferedColor)
     {
         // Create a new marker
         GMapMarker marker = new GMapMarker(position)
@@ -20,9 +20,9 @@ public static class OwnPositionHelper
                 Width = 40,
                 Height = 40,
                 Fill =  new ImageBrush {
-                    ImageSource = CreateInitialsImage("AB", Colors.Red, Colors.White)
+                    ImageSource = CreateInitialsImage(initials, userPreferedColor, Colors.White)
                 },
-                Stroke = Brushes.Red,
+                Stroke = new SolidColorBrush(userPreferedColor),
                 StrokeThickness = 1,  
                 ToolTip = $"lat: {position.Lat}, Lng: {position.Lng}"
             }

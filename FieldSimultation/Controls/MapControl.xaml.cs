@@ -6,14 +6,16 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using Code.OwnPosition;
 using Code.Models;
-using System.Reflection;
 using System;
+using System.Windows.Media;
 
 namespace FieldSimultation.Controls;
 
  public partial class MapControl: UserControl 
  {
     public event EventHandler MapClosed;
+    private string _initials;
+    private Color _userColor;
     public MapControl()
     {
         InitializeComponent();
@@ -31,11 +33,16 @@ namespace FieldSimultation.Controls;
         map.ShowCenter = false;
     }
 
+    public void InitializeMarker(string initials, string hexColor) {
+        _initials = initials;
+        _userColor = (Color)ColorConverter.ConvertFromString(hexColor);
+    }
+
     private void MapControl_RightButtonDown(object sender, MouseButtonEventArgs e)
     {
         var clickPosition = e.GetPosition(map);
         PointLatLng point = map.FromLocalToLatLng((int)clickPosition.X, (int)clickPosition.Y);
-        map.Markers.Add(OwnPositionHelper.AddMarker(point));
+        map.Markers.Add(OwnPositionHelper.AddMarker(point, _initials, _userColor));
     }
 
     private void OnMapClosed (object sender, RoutedEventArgs e)
