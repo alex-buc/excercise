@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ApiGateway.Models;
 using ApiGateway.Data;
 using Microsoft.EntityFrameworkCore;
+using ApiGateway.Shared;
 
 namespace ApiGateway.Controllers;
 
@@ -21,6 +22,19 @@ public class UserController : ControllerBase
     {
         var allUsers = await _myDdContext.Users.ToListAsync();
         return Ok(allUsers);
+    }
+    [HttpGet("user")]
+    public async Task<IActionResult> getUser([FromQueryAttribute] string user, [FromQueryAttribute] string password)
+    {
+        var foundUser = await _myDdContext.Users.FirstOrDefaultAsync(u => u.UserName == user && u.Password == PasswordHelper.GeneratePasswordWithStaticSalt(password));
+
+        if (foundUser == null)
+        {
+            return NotFound("User not found or incorrect password.");
+        }
+
+        // Return the user data (you can also return only specific properties if needed)
+        return Ok(foundUser);
     }
 
     [HttpPost("add")]
@@ -45,7 +59,7 @@ public class UserController : ControllerBase
 
         UserViewModel model = new  UserViewModel {
             UserName = userName,
-            Password = password
+            Password = PasswordHelper.GeneratePasswordWithStaticSalt(password)
         };
 
         _myDdContext.Users.Add(model);
@@ -53,4 +67,5 @@ public class UserController : ControllerBase
 
         return CreatedAtAction(nameof(getAllUsers), new { id = model.Id }, model);
     }
+   
 }

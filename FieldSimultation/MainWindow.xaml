@@ -4,9 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FieldSimultation"
-        xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:userControl="clr-namespace:FieldSimultation.Controls"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <gmap:GMapControl x:Name="MapControl" MouseRightButtonDown ="MapControl_RightButtonDown" />
+        <Grid.Background>
+            <RadialGradientBrush Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                <GradientStop Color="LightGray" Offset="0.0"/>
+                <GradientStop Color="Gray" Offset="1.0"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <!-- <gmap:GMapControl x:Name="MapControl" MouseRightButtonDown ="MapControl_RightButtonDown" /> -->
+        <ContentControl Name="MainContentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

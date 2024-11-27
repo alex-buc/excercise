@@ -11,7 +11,7 @@ public class MapShapeController : ControllerBase
 {
     private readonly MyDbContext _myDdContext;
 
-    public StaffLocationController(MyDbContext myDdContext)
+    public MapShapeController(MyDbContext myDdContext)
     {
         _myDdContext = myDdContext;
     }
