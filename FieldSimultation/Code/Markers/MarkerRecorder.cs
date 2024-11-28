@@ -15,9 +15,6 @@ public class MarkerRecorder
                 _grupMarker = new OwnPositionMarker(initials, userPreferedColor);
                 break;
             }
-            case MarkerType.SYMBOL: {
-                break;
-            }
             case MarkerType.POLIGON: {
                 _grupMarker = new PoligonMarker(userPreferedColor);
                 break;
@@ -39,7 +36,6 @@ public class MarkerRecorder
 public enum MarkerType 
 {
     OWN_LOCATION = 1,
-    SYMBOL = 2,
-    POLIGON = 3,
-    ROUTE = 4
+    POLIGON = 2,
+    ROUTE = 3
 }
