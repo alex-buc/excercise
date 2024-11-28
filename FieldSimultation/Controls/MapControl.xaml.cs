@@ -13,6 +13,7 @@ using GMap.NET.WindowsPresentation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Windows.Markup.Primitives;
+using FieldSimultation.Code.Services;
 
 namespace FieldSimultation.Controls;
 
@@ -20,17 +21,37 @@ namespace FieldSimultation.Controls;
  {
     public event EventHandler MapClosed;
     private string _initials;
-    private Color _userColor;
-
+    private string _userColor;
+    private StaffDto _staff;
+    private MissionDto _mission;
+    private MapShapeService _mapShapeSercice;
+    private MissionService _missionServices;
     private MarkerRecorder _markerRecorder;
+
 
     private bool _isEditMode = false;
     public MapControl()
     {
         InitializeComponent();
+        _markerRecorder = new MarkerRecorder();
+        _mapShapeSercice = new MapShapeService();
+        _missionServices = new MissionService();
     }
 
     public void InitializeMap(MissionDto mission)
+    {
+        _mission = mission;
+        SetMapConfiguration(mission);
+        LoadAllMapShapesFromDB(mission);
+    }
+
+    public void InitializeMarker(StaffDto staff) {
+        _initials = staff.Initials;
+        _staff = staff;
+        _userColor = staff.IdentificationColor;
+    }
+
+    private void SetMapConfiguration(MissionDto mission)
     {
         map.MapProvider = GMapProviders.OpenStreetMap;
         map.Position = new PointLatLng(mission.StartPositionLat, mission.StartPositionLng);
@@ -41,19 +62,22 @@ namespace FieldSimultation.Controls;
         map.ShowCenter = false;
     }
 
-    public void InitializeMarker(string initials, string hexColor) {
-        _initials = initials;
-        _userColor = (Color)ColorConverter.ConvertFromString(hexColor);
+    private async void LoadAllMapShapesFromDB(MissionDto mission)
+    {
+        List<MapShapeDto> mapShapes = await _missionServices.getAllMapShapesByMissionId(mission.Id);
+        foreach(MapShapeDto mapShape in mapShapes) {
+            _markerRecorder.InitializeMarker(mapShape.Type, _initials, _userColor);
+            _markerRecorder.AddMarker(map, mapShape);
+        }
     }
-
+    
     private void MapControl_LeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if(_isEditMode == true) {
             var clickPosition = e.GetPosition(map);
             PointLatLng point = map.FromLocalToLatLng((int)clickPosition.X, (int)clickPosition.Y);
-            _markerRecorder.AddPointToMarker(map, point);
+            _markerRecorder.AddPointToMarker(map, point, _staff);
         }
-        
     }
 
     private void Drow_Click(object sender, RoutedEventArgs e)
@@ -61,16 +85,21 @@ namespace FieldSimultation.Controls;
         MarkerType? markerType = getMarkerType();
         if(markerType != null) {
             SetEditMode(true);
-            _markerRecorder = new MarkerRecorder(markerType.Value, _initials, _userColor);
+            _markerRecorder.InitializeMarker(markerType.Value, _initials, _userColor);
         }
     }
     private void Save_Click(object sender, RoutedEventArgs e) {
-       SetEditMode(false);
-       _markerRecorder = null;
+       if(saveMarkersToDatabase()) {
+            MapShapeDto dto = _markerRecorder.GetMapShapeToData();
+            dto.MissionId = _mission.Id;
+            _mapShapeSercice.SaveMapShapeService(dto);
+        }
+        SetEditMode(false);
     }
 
     private void OnMapClosed (object sender, RoutedEventArgs e)
     {
+        map.Markers.Clear();
         MapClosed?.Invoke(sender, new EventArgs());
     }
 
@@ -88,5 +117,13 @@ namespace FieldSimultation.Controls;
             return (MarkerType)Enum.Parse(typeof(MarkerType), radionChk.Tag.ToString());
         }
         return null;
+    }
+
+    private bool saveMarkersToDatabase() {
+        var radionChk = SaveOperation.Children.OfType<RadioButton>().FirstOrDefault(m => m.IsChecked == true);
+        if(radionChk != null) {
+            return string.Equals(radionChk.Tag.ToString(), "yes");
+        }
+        return false;
     }
  }

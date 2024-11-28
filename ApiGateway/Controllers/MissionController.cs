@@ -46,4 +46,17 @@ public class MissionsController : ControllerBase
 
         return CreatedAtAction(nameof(getAllMissions), new { id = model.Id }, model);
     }
+
+    [HttpGet("{missionId}/map-shapes")]
+    public async Task<IActionResult> getAllMapShapesByMissionId(int missionId) 
+    {
+        MissionViewModel missionView = _myDdContext.Missions.Find(missionId);
+        
+        if(missionView == null) {
+            return BadRequest("Invalid mission id.");
+        }
+
+        List<MapShapeViewModel> mapShapes = await _myDdContext.MapShapes.Where(m => m.Mission.Id == missionId).ToListAsync();
+        return Ok(mapShapes);
+    }
 }

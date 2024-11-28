@@ -17,8 +17,8 @@
         </StackPanel>
         <StackPanel x:Name="SaveOperation" Grid.Row="0" Background="LightGray" Orientation="Horizontal" VerticalAlignment="Center" Visibility="Collapsed">
             <Button Content="Save markers" Width="150" Margin="0,20,20,0" Click="Save_Click"/>
-            <RadioButton Content="Yes" Margin="0,22,20,0" GroupName="Options" IsChecked="True" VerticalAlignment="Center" />
-            <RadioButton Content="No" Margin="0,20,20,0" GroupName="Options" VerticalAlignment="Center" />
+            <RadioButton Content="Yes" Margin="0,22,20,0" GroupName="Options" IsChecked="True" VerticalAlignment="Center" Tag="yes"/>
+            <RadioButton Content="No" Margin="0,20,20,0" GroupName="Options" VerticalAlignment="Center" Tag="no"/>
         </StackPanel>
         <gmap:GMapControl Grid.Row="1" x:Name="map" MouseLeftButtonDown ="MapControl_LeftButtonDown"/>
         <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="50" Margin="0, 70, 20, 0"

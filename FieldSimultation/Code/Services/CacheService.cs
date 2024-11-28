@@ -7,17 +7,14 @@ public class CacheService
 {
     Dictionary<string, object> _cache = new Dictionary<string, object>();
 
-    private static CacheService _instance;
+    private static CacheService? _instance;
 
     // Singleton instance to share across the app
     public static CacheService Instance
     {
         get
         {
-            if (_instance == null)
-            {
-                _instance = new CacheService();
-            }
+            _instance ??= new CacheService();
             return _instance;
         }
     }

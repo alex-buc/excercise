@@ -1,4 +1,5 @@
 using System.Windows.Media;
+using FieldSimultation.Code.Models;
 using GMap.NET;
 using GMap.NET.WindowsPresentation;
 
@@ -6,21 +7,25 @@ namespace FieldSimultation.Code.Markers;
 
 public class MarkerRecorder
 {
-    protected IMarker? _grupMarker;
+    protected IMarker? _marker;
+    protected MarkerType _markerType;
+    public MarkerRecorder() {
 
-    public MarkerRecorder(MarkerType markerType, string initials, Color userPreferedColor) {
+    }
+    public void InitializeMarker(MarkerType markerType, string initials, string userPreferedColor) {
+        _markerType = markerType;
         switch (markerType)
         {
             case MarkerType.OWN_LOCATION: {
-                _grupMarker = new OwnPositionMarker(initials, userPreferedColor);
+                _marker = new OwnPositionMarker(initials, userPreferedColor);
                 break;
             }
             case MarkerType.POLIGON: {
-                _grupMarker = new PoligonMarker(userPreferedColor);
+                _marker = new PoligonMarker(userPreferedColor);
                 break;
             }
             case MarkerType.ROUTE: {
-                _grupMarker = new RouteMarker(userPreferedColor);
+                _marker = new RouteMarker(userPreferedColor);
                 break;
             }
             default: {
@@ -28,14 +33,21 @@ public class MarkerRecorder
             }
         }
     }
-    public void AddPointToMarker (GMapControl control, PointLatLng point) {
-        _grupMarker?.AddMarker(control, point);
-    }
-}
 
-public enum MarkerType 
-{
-    OWN_LOCATION = 1,
-    POLIGON = 2,
-    ROUTE = 3
+    public void AddPointToMarker (GMapControl control, PointLatLng point, StaffDto staff) {
+        _marker?.AddPointToMarker(control, point, staff);
+    }
+
+    public void AddMarker(GMapControl control, MapShapeDto data) {
+        _marker?.AddMarker(control, data.Data);
+    }
+
+    internal MapShapeDto GetMapShapeToData()
+    {
+        string data =_marker?.getData();
+        return new MapShapeDto() {
+            Data = data,
+            Type = _markerType
+        };
+    }
 }

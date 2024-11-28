@@ -22,8 +22,6 @@ public partial class MainContainer: UserControl
 
     private void SetStaffInfo(StaffDto staff) {
         FullName.Content = staff.FullName;
-        //Rank
-
     }
 
     private async void SetMissionGrid(StaffDto staff) {
@@ -33,7 +31,7 @@ public partial class MainContainer: UserControl
     }
 
     private void SetMapInfo(StaffDto staff) {
-        Map.InitializeMarker(staff.Initials, staff.IdentificationColor);
+        Map.InitializeMarker(staff);
     }
 
     private void MissionGrid_ClickOpenMission(object sender, MissionDto mission) {

@@ -15,7 +15,7 @@ public class UserService
         _httpClient.BaseAddress = new Uri($"{HttpClientConst.ApiGatewayUrl}/Users/");
     }
 
-    public async Task<UserDto> GetUserAsync(string username, string password)
+    public async Task<UserDto?> GetUserAsync(string username, string password)
     {
         var response = await _httpClient.GetAsync($"authentificate?user={username}&password={password}");
         if (response.IsSuccessStatusCode)
@@ -29,7 +29,7 @@ public class UserService
         }
     }
 
-    public async Task<StaffDto> GetStaffInfoAsync(int userId)
+    public async Task<StaffDto?> GetStaffInfoAsync(int userId)
     {
         var response = await _httpClient.GetAsync($"{userId}/staff");
         if (response.IsSuccessStatusCode)

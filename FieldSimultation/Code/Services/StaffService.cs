@@ -16,7 +16,7 @@ public class StaffService
         _httpClient.BaseAddress = new Uri($"{HttpClientConst.ApiGatewayUrl}/Staffs/");
     }
 
-     public async Task<List<MissionDto>> getAllMissionsByStuffId(int userId)
+    public async Task<List<MissionDto>?> getAllMissionsByStuffId(int userId)
     {
         var response = await _httpClient.GetAsync($"{userId}/missions");
         if (response.IsSuccessStatusCode)
