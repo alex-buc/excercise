@@ -19,7 +19,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
              </Grid.RowDefinitions>
-            <Label x:Name="FullName" Grid.Row="0" Background="White"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Background="White">
+                <Image x:Name="Initials" Margin="0,0,10,0"/> 
+                <Label x:Name="Message" FontSize="20" VerticalAlignment="Center"/>
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="1" x:Name="Content">
             <userControl:GridView x:Name="MissionGrid" ClickOpenMission ="MissionGrid_ClickOpenMission" Visibility="Visible" />

@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using FieldSimultation.Code.Services;
 using FieldSimultation.Code.Models;
 using System.Collections.Generic;
+using System.Windows.Media;
+using FieldSimultation.Code.Shared;
 
 namespace FieldSimultation.Controls;
 
@@ -21,7 +23,9 @@ public partial class MainContainer: UserControl
     }
 
     private void SetStaffInfo(StaffDto staff) {
-        FullName.Content = staff.FullName;
+        Message.Content = $"Welcome: {staff.FullName}";
+        Color color = (Color)ColorConverter.ConvertFromString(staff.IdentificationColor);
+        Initials.Source = BitmapImageHelper.CreateInitialsImage(staff.Initials, Colors.White, color);
     }
 
     private async void SetMissionGrid(StaffDto staff) {
