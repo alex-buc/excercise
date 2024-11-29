@@ -47,13 +47,11 @@ public class RouteMarker : IMarker
         SolidColorBrush brush = new((Color)ColorConverter.ConvertFromString(data.UserPreferedColor));
         GMapRoute route = new GMapRoute(data.RoutePoints)
         {
-            Shape = new Ellipse
+            Shape = new Path
             {
-                Width = 40,
-                Height = 40,
                 Fill = brush,
                 Stroke = brush,
-                StrokeThickness = 1
+                StrokeThickness = 3
             },
             Tag = data.MarkerId
         };

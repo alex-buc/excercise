@@ -51,13 +51,12 @@ public class PoligonMarker : IMarker
 
         GMapPolygon poligon = new GMapPolygon(data.PoligonPoints)
         {
-            Shape = new Ellipse
+            Shape = new Path
             {
-                Width = 40,
-                Height = 40,
                 Fill = brush,
                 Stroke = brush,
-                StrokeThickness = 1
+                StrokeThickness = 1,
+                Opacity = 0.6
             },
             Tag = data.MarkerId
         };
