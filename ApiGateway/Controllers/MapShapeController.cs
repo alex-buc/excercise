@@ -27,7 +27,8 @@ public class MapShapesController : ControllerBase
     public async Task<IActionResult> addMapShape(
         [FromQueryAttribute] string type, 
         [FromQueryAttribute] string data,
-        [FromQueryAttribute] int missionId
+        [FromQueryAttribute] int missionId,
+        [FromQueryAttribute] int? id
     )
     {
         MissionViewModel missionModel = _myDdContext.Missions.Find(missionId);
@@ -35,15 +36,26 @@ public class MapShapesController : ControllerBase
             return BadRequest("Invalid mission id.");
         }
 
-        MapShapeViewModel model = new MapShapeViewModel {
-            Type = type,
-            Data = data,
-            Mission = missionModel
-        };
+        if(id == null) {
+            MapShapeViewModel model = new MapShapeViewModel {
+                Type = type,
+                Data = data,
+                Mission = missionModel
+            };
 
-        _myDdContext.MapShapes.Add(model);
-        await _myDdContext.SaveChangesAsync();
+            _myDdContext.MapShapes.Add(model);
+            await _myDdContext.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(allMapShapes), new { id = model.Id }, model);
+            return CreatedAtAction(nameof(allMapShapes), new { id = model.Id }, model);
+        }
+        else {
+           var existingShape = _myDdContext.MapShapes.Find(id.Value);
+           if(existingShape == null) {
+                return BadRequest("Invalid map shape id.");
+           }
+           existingShape.Data = data;
+           _myDdContext.SaveChanges();
+           return NoContent();
+        }
     }
 }

@@ -9,6 +9,7 @@ public class MarkerRecorder
 {
     protected IMarker? _marker;
     protected MarkerType _markerType;
+    protected int? _id;
     public MarkerRecorder() {
 
     }
@@ -39,6 +40,7 @@ public class MarkerRecorder
     }
 
     public void AddMarker(GMapControl control, MapShapeDto data) {
+        _id = data.Id;
         _marker?.AddMarker(control, data.Data);
     }
 
@@ -46,6 +48,7 @@ public class MarkerRecorder
     {
         string data =_marker?.getData();
         return new MapShapeDto() {
+            Id = _id,
             Data = data,
             Type = _markerType
         };

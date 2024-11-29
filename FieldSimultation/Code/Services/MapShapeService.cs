@@ -14,7 +14,9 @@ public class MapShapeService
     }
 
     public async Task SaveMapShapeService(MapShapeDto mapShapeDto) {
-        var response = await _httpClient.PostAsync($"?type={mapShapeDto.Type}&data={Uri.EscapeDataString(mapShapeDto.Data)}&missionId={mapShapeDto.MissionId}", null);
+        string url = $"?type={mapShapeDto.Type}&data={Uri.EscapeDataString(mapShapeDto.Data)}&missionId={mapShapeDto.MissionId}";
+        url += (mapShapeDto.Id != null)?$"&id={mapShapeDto.Id}":"";
+        var response = await _httpClient.PostAsync(url, null);
         if (!response.IsSuccessStatusCode)
         {
              throw new Exception("Unable to save map shapes data.");

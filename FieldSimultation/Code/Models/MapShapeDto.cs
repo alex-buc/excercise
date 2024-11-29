@@ -1,6 +1,7 @@
 namespace FieldSimultation.Code.Models;
 public class MapShapeDto
 {
+    public int? Id { get; set; }
     public MarkerType Type { get; set; }
 
     public string Data { get; set; }
